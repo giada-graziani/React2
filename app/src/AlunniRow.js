@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import Edit2 from './Edit2';
 export default function AlunniRow(props){
     const a = props.alunno;
     const caricaAlunni= props.caricaAlunni;
@@ -15,7 +16,11 @@ export default function AlunniRow(props){
             <td>{a.cognome}</td>
             <td>
                 {!inConferma ? (
-                    <button onClick={() => {setInConferma(true)}}>Cancella</button>
+                    <>
+                        <button onClick={() => {setInConferma(true)}}>Cancella</button>
+                        <Edit2></Edit2>
+                    </>
+                    
                 ):(
                     <div>
                         <p>Sei sicuro?

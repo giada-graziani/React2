@@ -34,12 +34,13 @@ class AlunniController
     $response->getBody()->write(json_encode($results));
     return $response->withHeader("Content-type", "application/json")->withStatus(200);
   }
-
+//Creare un nuovo alunno.
+  /*curl -X POST localhost:8080/alunni --data '{"nome":"giaf","cognome":"botiani"}' -H "Content-Type:application/json"*/
   public function create(Request $request, Response $response, $args)
   {
     $data = json_decode($request->getBody()->getContents(), true);
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
-    $raw_query = "INSERT INTO alunni (nome, cognome, cf) VALUES ('$data[nome]', '$data[cognome]', '$data[cf]');";
+    $raw_query = "INSERT INTO alunni (nome, cognome) VALUES ('$data[nome]', '$data[cognome]');";
     $result = $mysqli_connection->query($raw_query);
     if ($result && $mysqli_connection->affected_rows > 0) {
       $response->getBody()->write(json_encode(array("message" => "success")));
@@ -49,6 +50,7 @@ class AlunniController
     return $response->withHeader("Content-Type", "application/json")->withStatus(200);
   }
 
+   /*curl -X PUT localhost:8080/alunni/1 --data '{"nome":"giaia","cognome":"bottai"}' -H "Content-Type:application/json"*/
   public function update(Request $request, Response $response, $args)
   {
     $data = json_decode($request->getBody()->getContents(), true);
@@ -69,13 +71,6 @@ class AlunniController
       $raw_query .= " cognome='$data[cognome]'";
       $prima_aggiunta = false;
     }
-    if ((isset($data["cf"]))) {
-      if (!$prima_aggiunta) {
-        $raw_query .= ",";
-      }
-      $raw_query .= " cf='$data[cf]'";
-      $prima_aggiunta = true;
-    }
     $raw_query .= " WHERE id=$args[id]";
     $result = $mysqli_connection->query($raw_query);
     if ($result && $mysqli_connection->affected_rows > 0) {
@@ -86,6 +81,7 @@ class AlunniController
     return $response->withHeader("Content-Type", "application/json")->withStatus(200);
   }
 
+  //curl -X DELETE localhost:8080/alunni/4
   public function destroy(Request $request, Response $response, $args)
   {
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');

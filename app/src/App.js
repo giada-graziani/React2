@@ -2,11 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import AlunniRow from './AlunniRow';
 import InserisciAlunni from './InserisciAlunni';
+import Edit2 from './Edit2';
 import {useState} from 'react';
 
 
 
-function App() {
+function App(props) {
+  
   //si dichiara la variabile di stato
   const [alunni, setAlunni]= useState([]);
 
@@ -61,7 +63,11 @@ function App() {
                 <AlunniRow alunno={a} caricaAlunni={caricaAlunni}></AlunniRow>
               )}
             </table>
+            <>
               <InserisciAlunni caricaAlunni={caricaAlunni}></InserisciAlunni>
+            </>
+                
+              
             </>
           )}
         </>
